@@ -38,7 +38,8 @@
 
 typedef  enum{
 	MenuLeft = 1,
-	MenuRight = 2
+	MenuRight = 2,
+    MenuNone = 3
 }Menu;
 
 @protocol SlideNavigationContorllerAnimator;
@@ -74,5 +75,6 @@ extern NSString  *const SlideNavigationControllerDidReveal;
 - (void)toggleLeftMenu;
 - (void)toggleRightMenu;
 - (BOOL)isMenuOpen;
+- (void)reset;
 
 @end

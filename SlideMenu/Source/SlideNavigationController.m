@@ -589,11 +589,13 @@ static SlideNavigationController *singletonInstance;
 	return rect;
 }
 
-- (void)prepareMenuForReveal:(Menu)menu
-{
+- (void)prepareMenuForReveal:(Menu)menu {
+    NSLog(@" prepping %u --> %u", menu, _lastRevealedMenu);
+    
 	// Only prepare menu if it has changed (ex: from MenuLeft to MenuRight or vice versa)
     if (self.lastRevealedMenu && menu == self.lastRevealedMenu)
         return;
+    
     
     UIViewController *menuViewController = (menu == MenuLeft) ? self.leftMenu : self.rightMenu;
 	UIViewController *removingMenuViewController = (menu == MenuLeft) ? self.rightMenu : self.leftMenu;
@@ -601,7 +603,7 @@ static SlideNavigationController *singletonInstance;
     self.lastRevealedMenu = menu;
 	
 	[removingMenuViewController.view removeFromSuperview];
-	[self.view.window insertSubview:menuViewController.view atIndex:0];
+	[self.view.superview insertSubview:menuViewController.view atIndex:0];
 
 	[self updateMenuFrameAndTransformAccordingToOrientation];
 	
@@ -881,6 +883,11 @@ static SlideNavigationController *singletonInstance;
     [_rightMenu.view removeFromSuperview];
     
     _rightMenu = rightMenu;
+}
+
+
+- (void) reset {
+    self.lastRevealedMenu = MenuNone;
 }
 
 @end
